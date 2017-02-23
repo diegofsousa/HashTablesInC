@@ -3,6 +3,7 @@
 
 typedef struct hash Hash;
 typedef struct aluno Aluno;
+
 struct hash{
     int n;
     int dim;
@@ -16,7 +17,19 @@ struct aluno{
     char turma;
 };
 
+Hash *hsl_cria(void);
+
 int main(){
+    Hash *hash = hsl_cria();
 
     return 0;
+}
+
+Hash *hsl_cria(void){
+    Hash *a = (Hash*)malloc(sizeof(Hash));
+    a->dim = 50;
+    a->n = 0;
+    Aluno * aluno = (Aluno*)malloc(a->dim * sizeof(Aluno));
+    a->v = &aluno;
+    return a;
 }
