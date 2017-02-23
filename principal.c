@@ -18,18 +18,26 @@ struct aluno{
     char turma;
 };
 
+//Questão 10 ED II
+
+
 Hash *hsl_cria(void);
 int hash(Hash *tab, int mat);
 Hash *hls_insere(Hash *tab, int mat, char *n, char *e, char t);
+void hsl_busca(Hash *tab, int mat);
 
 int main(){
     Hash *hash = hsl_cria();
-    hash = hls_insere(hash, 5, "diego", "diego@gmail.com", '1');
+    hash = hls_insere(hash, 15, "diego", "diego@gmail.com", '1');
+    hash = hls_insere(hash, 16, "qualquercoisa", "qualquercoisa@gmail.com", '2');
+    hsl_busca(hash, 16);
 
 
     return 0;
 }
 
+
+//letra a
 Hash *hsl_cria(void){
     Hash *a = (Hash*)malloc(sizeof(Hash));
     a->dim = 50;
@@ -37,27 +45,30 @@ Hash *hsl_cria(void){
     int i=0;
 
     Aluno * aluno = (Aluno*)malloc(a->dim * sizeof(Aluno));
-    a->v = &aluno;
+    a->v = aluno;
     for(i=0;i<a->dim;i++){
-        a->v[i] == NULL;
+        a->v[i] = NULL;
     }
 
     return a;
 }
 
+//letra b
 int hash(Hash *tab, int mat){
     return(mat%tab->dim);
 }
 
-
+//letra c
 void redimensiona(Hash* tab){
     float porc = tab->n/tab->dim ;
     if(porc < 0.75 ){
-        tab =(Hash*)realloc(tab, 50*sizeof(Hash));
+        tab->v =(Aluno*)realloc(tab->v, 50*sizeof(Hash));
+        tab->dim += 50;
         //remapear aqui
     }
 }
 
+//letra d
 Hash *hls_insere(Hash *tab, int mat, char *n, char *e, char t){
     int h = hash(tab, mat);
     while(tab->v[h] != NULL){
@@ -72,6 +83,16 @@ Hash *hls_insere(Hash *tab, int mat, char *n, char *e, char t){
     strcpy(tab->v[h]->nome, n);
     strcpy(tab->v[h]->email, e);
     tab->v[h]->turma = t;
+    tab->n++;
     return tab;
+}
+
+void hsl_busca(Hash *tab, int mat){
+    if(tab->v[mat] != NULL){
+        printf("\nExiste!");
+        printf("\n%d\n%s\n%s\n%c", tab->v[mat]->mat, tab->v[mat]->nome, tab->v[mat]->email, tab->v[mat]->turma);
+    }else{
+        printf("Não existe");
+    }
 }
 
